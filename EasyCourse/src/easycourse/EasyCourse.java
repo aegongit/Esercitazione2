@@ -10,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 
 
@@ -41,7 +42,10 @@ public class EasyCourse {
 	@POST
 	@Path("/{corso}/")
 	//@Consumes(MediaType.TEXT_PLAIN)
-	public void addCorso(@PathParam("corso") String idCorso) {
+	public Response addCorso(@PathParam("corso") String idCorso) {
 		listCorsi.add(new Corso(idCorso,idCorso));
+		String output = "POST REQUEST: " + idCorso;
+		return Response.status(200).entity(output).build();
+		
 	}
 }
