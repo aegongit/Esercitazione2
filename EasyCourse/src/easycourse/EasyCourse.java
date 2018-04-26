@@ -39,6 +39,21 @@ public class EasyCourse {
 	}
 	
 	
+	@GET 
+	@Path("/{corso}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Corso getCorso(@PathParam("corso") String idCorso) {
+		Iterator<Corso> i = listCorsi.iterator();
+		while(i.hasNext()) {
+			Corso c =  i.next();
+			if(c.getCod().equals(idCorso))
+				return c;
+		}
+		return null;
+			
+	}
+	
+	
 	@POST
 	@Path("/{corso}/")
 	//@Consumes(MediaType.TEXT_PLAIN)
