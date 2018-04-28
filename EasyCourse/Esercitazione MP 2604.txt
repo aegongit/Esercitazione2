@@ -1,0 +1,33 @@
+INfo gestite dal server
+<CORSO>
+	anno
+	sem
+	<orario,aula> da a , giorno
+
+Da client cosa vogliamo vedere?
+Elenco corsi
+aula anno semestre
+orario
+docente
+
+aula (elenco di tutti i corsi in una specifica aula)
+stato dell aula orario
+
+progetto sistema REST
+1) Quali sono gli oggetti, le classi lato server
+2) Le interfacce, i servizi dal server verso il client
+3) 
+
+Rirorse: 
+/corsi
+/corsi/{id_corso}/
+/corsi?da= &a=
+/corsi?giorno
+/corsi/{id_docente}/ (restituisce tutti i corsi del docente)
+/corsi/{id_aula} (tutti i corsi nell'aula)
+/corsi?anno=1 o 2
+/corsi?semestre=1 o 2
+
+/aule
+/aule/{id_aula}/
+/aule/{id_aula}?da= &a=
