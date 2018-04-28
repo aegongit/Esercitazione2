@@ -19,8 +19,8 @@ progetto sistema REST
 3) 
 
 Rirorse: 
-/corsi
-/corsi/{id_corso}/
+/corsi  ok
+/corsi/{id_corso}/ ok
 /corsi?da= &a=
 /corsi?giorno
 /corsi/{id_docente}/ (restituisce tutti i corsi del docente)

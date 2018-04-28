@@ -16,6 +16,8 @@ public class Corso {
 	public Corso(String cod, String nome) {
 		this.nome = nome;
 		this.cod = cod;
+		this.mappaOrario = new HashMap<Slot,Aula>();
+		this.mappaOrario.put(new Slot("25",9,10), new Aula(12,"Aula M"));
 	}
 	public String getNome() {
 		return nome;
@@ -35,6 +37,14 @@ public class Corso {
 	public void setDocente(Docente docente) {
 		this.docente = docente;
 	}
+	public HashMap<Slot,Aula> getMappaOrario() {
+		return mappaOrario;
+	}
+	public void setMappaOrario(HashMap<Slot,Aula> mappaOrario) {
+		this.mappaOrario = mappaOrario;
+	}
+	
+	
 	
 	
 	

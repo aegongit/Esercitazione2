@@ -9,6 +9,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -40,9 +41,9 @@ public class EasyCourse {
 	
 	
 	@GET 
-	@Path("/{corso}")
+	@Path("/{idCorso}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Corso getCorso(@PathParam("corso") String idCorso) {
+	public Corso getCorso(@PathParam("idCorso") String idCorso) {
 		Iterator<Corso> i = listCorsi.iterator();
 		while(i.hasNext()) {
 			Corso c =  i.next();
@@ -54,6 +55,30 @@ public class EasyCourse {
 	}
 	
 	
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Corso> getCorsi(@QueryParam("da") int da, @QueryParam("a") int a){
+		
+		System.out.println("da :" +da +" a = "+a);
+		Iterator<Corso> i = EasyCourse.listCorsi.iterator();
+		ArrayList<Corso> list = new ArrayList<Corso>();
+		
+		while(i.hasNext()) {
+			Corso c = i.next();
+			Iterator<Slot> i1 = c.getMappaOrario().keySet().iterator();
+				while(i1.hasNext()) {
+					Slot s = i1.next();
+					if(Slot.isGreater(s.getOraInizio(),da) && Slot.isSmaller(s.getOraFine(),a))
+						list.add(c);
+				}
+		}
+		
+		return list;
+	}
+	
+	
+	
 	@POST
 	@Path("/{corso}/")
 	//@Consumes(MediaType.TEXT_PLAIN)
@@ -63,4 +88,6 @@ public class EasyCourse {
 		return Response.status(200).entity(output).build();
 		
 	}
+	
+	
 }
