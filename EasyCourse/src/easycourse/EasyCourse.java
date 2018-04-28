@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -25,19 +26,7 @@ public class EasyCourse {
 			listCorsi = new ArrayList<Corso>();
 	}
 	
-	@GET 
-	@Produces(MediaType.TEXT_PLAIN)
-	public String getCorsi() {
-		if (!listCorsi.isEmpty()) {
-			Iterator<Corso> i = listCorsi.iterator();
-			String result = "";
-			while (i.hasNext()) {
-				result = result + "\n" + i.next().getNome();
-			}
-			return result;
-		}
-		return "Nessun corso";
-	}
+
 	
 	
 	@GET 
@@ -60,7 +49,9 @@ public class EasyCourse {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Corso> getCorsi(@QueryParam("da") int da, @QueryParam("a") int a){
 		
-		System.out.println("da :" +da +" a = "+a);
+		if(da == 0 && a==0)
+			return listCorsi;
+		
 		Iterator<Corso> i = EasyCourse.listCorsi.iterator();
 		ArrayList<Corso> list = new ArrayList<Corso>();
 		
@@ -85,6 +76,15 @@ public class EasyCourse {
 	public Response addCorso(@PathParam("corso") String idCorso) {
 		listCorsi.add(new Corso(idCorso,idCorso));
 		String output = "POST REQUEST: " + idCorso;
+		return Response.status(200).entity(output).build();
+		
+	}
+	
+	@POST
+	@Path("/test")
+	//@Consumes(MediaType.)
+	public Response test(@FormParam("cod") String msg) {
+		String output = "POST REQUEST: " + msg;
 		return Response.status(200).entity(output).build();
 		
 	}
