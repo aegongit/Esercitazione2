@@ -17,8 +17,18 @@ public class Corso {
 		this.nome = nome;
 		this.cod = cod;
 		this.mappaOrario = new HashMap<Slot,Aula>();
-		this.mappaOrario.put(new Slot("25",9,10), new Aula(12,"Aula M"));
 	}
+	
+	public Corso(String cod, String nome,Docente d,int semestre, int anno) {
+		this.nome = nome;
+		this.cod = cod;
+		this.mappaOrario = new HashMap<Slot,Aula>();
+		this.docente =d;
+		this.anno = anno;
+		this.semestre = semestre;
+	}
+	
+	
 	public String getNome() {
 		return nome;
 	}
@@ -42,6 +52,18 @@ public class Corso {
 	}
 	public void setMappaOrario(HashMap<Slot,Aula> mappaOrario) {
 		this.mappaOrario = mappaOrario;
+	}
+	public int getSemestre() {
+		return semestre;
+	}
+	public void setSemestre(int semestre) {
+		this.semestre = semestre;
+	}
+	public int getAnno() {
+		return anno;
+	}
+	public void setAnno(int anno) {
+		this.anno = anno;
 	}
 	
 	

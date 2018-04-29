@@ -83,8 +83,8 @@ public class EasyCourse {
 	@POST
 	@Path("/test")
 	//@Consumes(MediaType.)
-	public Response test(@FormParam("cod") String idCorso, @FormParam("nome") String nome) {
-		listCorsi.add(new Corso(idCorso,nome));
+	public Response test(@FormParam("cod") String idCorso, @FormParam("nome") String nome, @FormParam("nomeDocente") String nomeDocente, @FormParam("cognomeDocente") String cognomeDocente,@FormParam("matDocente") String matDocente,@FormParam("semestre") int semestre,@FormParam("anno") int anno) {
+		listCorsi.add(new Corso(idCorso,nome,new Docente(nomeDocente,cognomeDocente,matDocente),semestre,anno));
 		String output = "POST REQUEST: " + idCorso;
 		return Response.status(200).entity(output).build();
 		
