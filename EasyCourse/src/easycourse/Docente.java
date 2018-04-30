@@ -9,9 +9,33 @@ public class Docente {
 	private String matricola;
 	
 	public Docente(String nome, String cognome,String mat) {
+		this.setNome(nome);
+		this.setCognome(cognome);
+		this.setMatricola(mat);
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getCognome() {
+		return cognome;
+	}
+
+	public void setCognome(String cognome) {
 		this.cognome = cognome;
-		this.matricola = mat;
+	}
+
+	public String getMatricola() {
+		return matricola;
+	}
+
+	public void setMatricola(String matricola) {
+		this.matricola = matricola;
 	}
 
 }

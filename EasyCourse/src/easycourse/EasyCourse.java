@@ -69,6 +69,22 @@ public class EasyCourse {
 	}
 	
 	
+	@GET
+	@Path("/docenti/{id_docente}/")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Corso> getCorsi(@PathParam("id_docente") String idDocente) {
+		Iterator<Corso> i = listCorsi.iterator();
+		ArrayList<Corso> list = new ArrayList<Corso>();
+		while(i.hasNext()) {
+			Corso c = i.next();
+			if(c.getDocente().getMatricola().equals(idDocente))
+				list.add(c);
+			
+		}
+		return list;
+	}
+	
+	
 	
 	@POST
 	@Path("/{corso}/")

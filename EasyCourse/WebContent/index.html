@@ -1,28 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-	integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-	crossorigin="anonymous"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-	integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-	crossorigin="anonymous"></script>
+<!doctype html>
+<html lang="it">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
 
 
 
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-	integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
-	crossorigin="anonymous">
 
-
-<script>
+    <script>
 
 
 	function toggler(divId) {
@@ -52,20 +42,55 @@
 		xhttp.send();
 
 	}
+	
+	function visualizzaCorsi1(idDocente) {
+		console.log(idDocente);
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var obj1 = JSON.parse(this.responseText);
+				console.log(JSON.stringify(obj1));
+				console.log("lenght : " + obj1.length);
+				var msg = "<tr>";
+				for (var i = 0; i < obj1.length; i++) {
+
+					var obj = obj1[i];
+
+					msg = msg + "<th scope=\"row\">" + i + "</th><td>"+ obj.cod + "</td><td>" + obj.nome + "</td></tr>";
+				}
+				document.getElementById("listCorsi1").innerHTML = msg;
+			}
+		};
+		xhttp.open("GET", "http://localhost:8080/EasyCourse/rest/corsi/docenti/"+idDocente, true);
+		xhttp.send();
+
+	}
 </script>
 
 <style type="text/css">
-#inserisci {
+#inserisci, #visualizzaCorsiDocente , #visualizza {
 	display: none;
 }
 
-#visualizza {
-	display: none;
-}
+
 </style>
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+
+    <title>Gestione corsi!</title>
+  </head>
+  <body>
+    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  
+  
+  
+  
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -84,6 +109,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#" onclick="$('#visualizza').toggle();"  >Visualizza corsi</a>
           <div class="dropdown-divider"></div>
+           <a class="dropdown-item" href="#" onclick="$('#visualizzaCorsiDocente').toggle();"  >Visualizza corsi di un docente </a>
           <a class="dropdown-item" href="#">Something else here</a>
         </div>
       </li>
@@ -119,8 +145,28 @@
 			<div class="col-sm-10">
 				<input type="text" name="cod" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Codice corso" required>
 				<input type="text" name="nome" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Nome corso" required>
-				<input type="text" name="semestre" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Semestre" required>
-				<input type="text" name="anno" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Anno" required>
+				<div>
+				<div class="form-check form-check-inline">
+  						<input class="form-check-input" type="radio" name="semestre" id="inlineRadio1" value="1" required>
+ 						<label class="form-check-label" for="inlineRadio1">Primo semestre</label>
+				</div>
+				<div class="form-check form-check-inline">
+  						<input class="form-check-input" type="radio" name="semestre" id="inlineRadio2" value="2" required>
+  						<label class="form-check-label" for="inlineRadio2">Secondo semestre </label>
+				</div>
+				</div>
+				<div>
+				<div class="form-check form-check-inline">
+  						<input class="form-check-input" type="radio" name="anno" id="inlineRadio1" value="1" required>
+ 						<label class="form-check-label" for="inlineRadio1">Primo anno </label>
+				</div>
+				<div class="form-check form-check-inline">
+  						<input class="form-check-input" type="radio" name="anno" id="inlineRadio2" value="2" required>
+  						<label class="form-check-label" for="inlineRadio2">Secondo anno</label>
+				</div>
+				</div>
+				
+			
 			</div>
 		</div>
 		
@@ -160,6 +206,30 @@
 		</tbody>
 	</table>
 	</div>
+	
+	
+	<div class="container" id="visualizzaCorsiDocente">
+	<h2>Elenco corsi</h2>
+	<input id="nomeDocenteText" name="nomeDocenteText" type="text" value="" size="40" maxlength="200" />
+	<button type="button" onclick="visualizzaCorsi1(document.getElementById('nomeDocenteText').value)">Cerca</button>
 
-</body>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Cod.</th>
+				<th scope="col">Nome</th>
+			</tr>
+		</thead>
+		<tbody id="listCorsi1">
+
+		</tbody>
+	</table>
+	</div>
+  
+  
+  
+  
+  
+  </body>
 </html>
