@@ -9,7 +9,23 @@ public class Aula {
 	private String nome ;
 	
 	public Aula(int idAula, String nome) {
+		this.setIdAula(idAula);
+		this.setNome(nome);
+	}
+
+	public int getIdAula() {
+		return idAula;
+	}
+
+	public void setIdAula(int idAula) {
 		this.idAula = idAula;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 	

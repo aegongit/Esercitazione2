@@ -1,7 +1,11 @@
 package easycourse;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
@@ -21,9 +25,19 @@ public class EasyCourse {
 
 	private static  ArrayList<Corso> listCorsi;
 	
+ 	
 	public EasyCourse() {
-		if(listCorsi == null)
+		if (listCorsi == null) {
+			
 			listCorsi = new ArrayList<Corso>();
+			Corso c = new Corso("1", "Ingegneria del software", new Docente("Pasquale", "Foggia", "1"), 1, 1);
+			HashMap<Slot, Aula> h = new HashMap<Slot, Aula>();
+			Aula a = new Aula(1, "M");
+			h.put(new Slot("Giovedì", 9, 13), a);
+			
+			c.setMappaOrario(h);
+			listCorsi.add(c);
+		}
 	}
 	
 
@@ -103,6 +117,23 @@ public class EasyCourse {
 		listCorsi.add(new Corso(idCorso,nome,new Docente(nomeDocente,cognomeDocente,matDocente),semestre,anno));
 		String output = "POST REQUEST: " + idCorso;
 		return Response.status(200).entity(output).build();
+		
+	}
+	
+	
+	@GET
+	@Path("/aule")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Set<Aula> getAula(){
+		Iterator<Corso> i = listCorsi.iterator();
+		Set<Aula> list = new LinkedHashSet<Aula>();
+		while(i.hasNext()) {
+			Corso c = i.next();
+			list.addAll(c.getMappaOrario().values());
+			
+			
+		}
+		return list;
 		
 	}
 	
