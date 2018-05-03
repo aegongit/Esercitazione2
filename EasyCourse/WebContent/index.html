@@ -27,18 +27,18 @@
 			if (this.readyState == 4 && this.status == 200) {
 				var obj1 = JSON.parse(this.responseText);
 				console.log(JSON.stringify(obj1));
-				console.log("lenght : " + obj1.length);
+				
 				var msg = "<tr>";
-				for (var i = 0; i < obj1.length; i++) {
+				for (var i = 0; i < 1; i++) {
 
-					var obj = obj1[i];
-
-					msg = msg + "<th scope=\"row\">" + i + "</th><td>"+ obj.cod + "</td>"+"<td>" + obj.nome + "</td>"+"<td>" + obj.docente.nome +" "+ obj.docente.cognome + "</td>"+"</tr>";
+					var obj = obj1[0];
+					console.log(JSON.stringify(obj));
+					msg = msg + "<th scope=\"row\">" + i + "</th><td>"+ obj + "</td>"+"<td>" + obj.nome + "</td>"+"<td>" + obj.docente.nome +" "+ obj.docente.cognome + "</td>"+"</tr>";
 				}
 				document.getElementById("listCorsi").innerHTML = msg;
 			}
 		};
-		xhttp.open("GET", "http://localhost:8080/EasyCourse/rest/corsi", true);
+		xhttp.open("GET", "http://localhost:8080/EasyCourse/rest/unisa/corsi", true);
 		xhttp.send();
 
 	}
@@ -138,7 +138,7 @@
 
 	<h1>Inserisci un nuovo corso</h1>
 
-	<form action="/EasyCourse/rest/corsi/test" method="post" >
+	<form action="/EasyCourse/rest/unisa/corsi/test" method="post" >
 		<div class="form-group row">
 			<label for="colFormLabelSm"
 				class="col-sm-2 col-form-label col-form-label-sm">Corso</label>
