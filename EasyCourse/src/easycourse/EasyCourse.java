@@ -11,26 +11,27 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 
 
 @Path("/{id_uni}")
 public class EasyCourse {
-
 	
-	private static HashMap<String,Corso> listCorsi;
+	private static HashMap<String,Corso> mapCorsi;
 	private static HashMap<String,Docente> mapDocenti;
 	private static HashMap<Integer,Aula> mapAule;
 	
 	
-	
  	
 	public EasyCourse() {
-		if (listCorsi == null) {
+		if (mapCorsi == null) {
 			
-			listCorsi = new HashMap<String,Corso>();
+			mapCorsi = new HashMap<String,Corso>();
 			mapDocenti = new HashMap<String,Docente>();
 			mapAule = new HashMap<Integer,Aula>();
 			
@@ -40,7 +41,7 @@ public class EasyCourse {
 			h.put(new Slot("Giovedì", 9, 13), a);
 			
 			c.setMappaOrario(h);
-			listCorsi.put(c.getCod(), c);
+			mapCorsi.put(c.getCod(), c);
 			mapDocenti.put(c.getDocente().getMatricola(), c.getDocente());
 			mapAule.put(a.getIdAula(), a);
 		}
@@ -75,39 +76,95 @@ public class EasyCourse {
 	@GET
 	@Path("/corsi/{id_corso}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Corso getCorsi(@PathParam("id_corso") String id_corso){
-		return this.listCorsi.get(id_corso);
+	public Corso getCorso(@PathParam("id_corso") String id_corso){
+		return this.mapCorsi.get(id_corso);
 	}
 	
 	@GET 
 	@Path("/corsi")
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<String,Corso> getCorsiByDocente(@QueryParam("idDocente") String idDocente){
-		if (idDocente != null) {
-			Iterator<Corso> i = listCorsi.values().iterator();
-			HashMap<String, Corso> list = new HashMap<String, Corso>();
+	public HashMap<String,Corso> getCorsi(@Context UriInfo ui){
+		MultivaluedMap<String, String> queryParams = ui.getQueryParameters();
+		if(queryParams.containsKey("idDocente") && queryParams.containsKey("anno") && queryParams.containsKey("semestre")){
+			Iterator<Corso> i = mapCorsi.values().iterator();
+			HashMap<String, Corso> mapC = new HashMap<String, Corso>();
 			while (i.hasNext()) {
 				Corso c = i.next();
-				if (c.getDocente().getMatricola().equals(idDocente))
-					list.put(c.getCod(), c);
-
+				if (c.getDocente().getMatricola().equals(queryParams.getFirst("idDocente")) && c.getAnno()==Integer.parseInt(queryParams.getFirst("anno")) && c.getSemestre()==Integer.parseInt(queryParams.getFirst("semestre")))
+					mapC.put(c.getCod(), c);
 			}
-			return list;
+			return mapC;
+		}
+		if(queryParams.containsKey("idDocente")){
+			Iterator<Corso> i = mapCorsi.values().iterator();
+			HashMap<String, Corso> mapC = new HashMap<String, Corso>();
+			while (i.hasNext()) {
+				Corso c = i.next();
+				if (c.getDocente().getMatricola().equals(queryParams.getFirst("idDocente")))
+					mapC.put(c.getCod(), c);
+			}
+			return mapC;
+		}
+		if(queryParams.containsKey("anno")){
+			Iterator<Corso> i = mapCorsi.values().iterator();
+			HashMap<String, Corso> mapC = new HashMap<String, Corso>();
+			while (i.hasNext()) {
+				Corso c = i.next();
+				if (c.getAnno()==Integer.parseInt(queryParams.getFirst("anno")))
+					mapC.put(c.getCod(), c);
+			}
+			return mapC;
+		}
+		if(queryParams.containsKey("semestre")){
+			Iterator<Corso> i = mapCorsi.values().iterator();
+			HashMap<String, Corso> mapC = new HashMap<String, Corso>();
+			while (i.hasNext()) {
+				Corso c = i.next();
+				if (c.getSemestre()==Integer.parseInt(queryParams.getFirst("semestre")))
+					mapC.put(c.getCod(), c);
+			}
+			return mapC;
+		}
+		else if (!queryParams.isEmpty()){
+			return null;
 		}
 		
-		return listCorsi;
+		return mapCorsi;
 	}
+	
+//	@GET 
+//	@Path("/corsi")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public HashMap<String,Corso> getCorsiByDocente(@QueryParam("idDocente") String idDocente){
+//		if (idDocente != null) {
+//			Iterator<Corso> i = mapCorsi.values().iterator();
+//			HashMap<String, Corso> mapC = new HashMap<String, Corso>();
+//			while (i.hasNext()) {
+//				Corso c = i.next();
+//				if (c.getDocente().getMatricola().equals(idDocente))
+//					mapC.put(c.getCod(), c);
+//			}
+//			return mapC;
+//		}
+//		
+//		return mapCorsi;
+//	}
 	
 	
 	@POST
 	@Path("/corsi/{id_corso}")
 	public Response test(@FormParam("cod") String idCorso, @FormParam("nome") String nome, @FormParam("nomeDocente") String nomeDocente, @FormParam("cognomeDocente") String cognomeDocente,@FormParam("matDocente") String matDocente,@FormParam("semestre") int semestre,@FormParam("anno") int anno) {
-		listCorsi.put(idCorso,new Corso(idCorso,nome,new Docente(nomeDocente,cognomeDocente,matDocente),semestre,anno));
-		String output = "POST REQUEST: " + idCorso;
+		String output = "Corso gia presente";
+		if(!mapCorsi.containsKey(idCorso)){
+			Docente doc = new Docente(nomeDocente,cognomeDocente,matDocente);
+			mapCorsi.put(idCorso,new Corso(idCorso,nome, doc,semestre,anno));
+			if(!mapDocenti.containsKey(matDocente)){
+				mapDocenti.put(doc.getMatricola(), doc);
+			}
+			output = "Corso " + idCorso + " inserito";
+		}
 		return Response.status(200).entity(output).build();
-		
 	}
-	
 	
 	@GET
 	@Path("/docenti")
@@ -132,7 +189,7 @@ public class EasyCourse {
 	@GET
 	@Path("/aule/{id_aula}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Aula getAula(@PathParam("id_aula") String id_aula){
+	public Aula getAula(@PathParam("id_aula") Integer id_aula){
 		return this.mapAule.get(id_aula);
 	}
 	
