@@ -153,10 +153,10 @@ public class EasyCourse {
 	
 	@POST
 	@Path("/corsi/{id_corso}")
-	public Response test(@FormParam("cod") String idCorso, @FormParam("nome") String nome, @FormParam("nomeDocente") String nomeDocente, @FormParam("cognomeDocente") String cognomeDocente,@FormParam("matDocente") String matDocente,@FormParam("semestre") int semestre,@FormParam("anno") int anno) {
+	public Response test(@FormParam("cod") String idCorso, @FormParam("nome") String nome, @FormParam("matDocente") String matDocente,@FormParam("semestre") int semestre,@FormParam("anno") int anno) {
 		String output = "Corso gia presente";
 		if(!mapCorsi.containsKey(idCorso)){
-			Docente doc = new Docente(nomeDocente,cognomeDocente,matDocente);
+			Docente doc = this.mapDocenti.get(matDocente);
 			mapCorsi.put(idCorso,new Corso(idCorso,nome, doc,semestre,anno));
 			if(!mapDocenti.containsKey(matDocente)){
 				mapDocenti.put(doc.getMatricola(), doc);
@@ -177,6 +177,20 @@ public class EasyCourse {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Docente getDocente(@PathParam("id_docente") String id_docente){
 		return this.mapDocenti.get(id_docente);
+	}
+	
+	
+	@POST
+	@Path("/docenti/{id_docente}")
+	public Response setDocente(@FormParam("matricolaDocente") String idDocente, @FormParam("nome") String nome,@FormParam("cognome") String cognome) {
+		String output = "Corso gia presente";
+		if(!mapDocenti.containsKey(idDocente)){
+			Docente doc = new Docente(nome,cognome,idDocente);
+			mapDocenti.put(idDocente, doc);
+			
+			output = "Corso " + idDocente + " inserito";
+		}
+		return Response.status(200).entity(output).build();
 	}
 	
 	@GET

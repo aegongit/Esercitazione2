@@ -15,6 +15,7 @@
     <script>
 
 
+    
 	function toggler(divId) {
 		$("#" + divId).toggle();
 		
@@ -71,10 +72,36 @@
 		xhttp.send();
 
 	}
+	
+	function getDocenti(){
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var obj1 = JSON.parse(this.responseText);
+				
+				console.log(JSON.stringify(obj1));
+				
+				var msg = "";
+				var keys = Object.keys(obj1);
+				for (var i = 0; i<  keys.length; i++) {
+					var obj = obj1[keys[i]];
+					console.log("Cosro con id : "+keys[i]+" "+JSON.stringify(obj));
+					
+					
+						
+					msg = msg + "<option value=\""+obj.matricola+"\">"+obj.nome+" "+obj.cognome+"</option>";
+				}
+				document.getElementById("inlineFormCustomSelect").innerHTML = msg;
+				document.getElementById("matDocente").innerHTML = msg;
+			}
+		};
+		xhttp.open("GET", "http://localhost:8080/EasyCourse/rest/unisa/docenti", true);
+		xhttp.send();
+	}
 </script>
 
 <style type="text/css">
-#inserisci, #visualizzaCorsiDocente , #visualizza {
+#inserisci, #visualizzaCorsiDocente , #visualizza, #inserisciDocente {
 	display: none;
 }
 
@@ -84,7 +111,7 @@
 
     <title>Gestione corsi!</title>
   </head>
-  <body>
+  <body onload="getDocenti()">
     
 
     <!-- Optional JavaScript -->
@@ -125,6 +152,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#" onclick="$('#inserisci').toggle();"  >Inserisci nuovo corso</a>
+          <a class="dropdown-item" href="#" onclick="$('#inserisciDocente').toggle();"  >Inserisci nuovo docente</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>
         </div>
@@ -181,9 +209,10 @@
 			<label for="colFormLabelSm"
 				class="col-sm-2 col-form-label col-form-label-sm">Docente</label>
 			<div class="col-sm-10">
-				<input type="text" name="nomeDocente" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Nome docente" required>
-				<input type="text" name="cognomeDocente" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Cognome docente" required>
-				<input type="text" name="matDocente" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Matricola docente" required>
+				<label class="mr-sm-3" for="matDocente">Docente</label>
+				<select name="matDocente" class="custom-select mr-sm-2" id="matDocente">
+
+				</select>
 			</div>
 		</div>
 
@@ -195,6 +224,39 @@
 	</form>
 	
 	</div>
+	<div class="container" id="inserisciDocente" >
+  
+
+	<h1>Inserisci un nuovo docente</h1>
+
+	<form action="/EasyCourse/rest/unisa/docenti/h" method="post" >
+		<div class="form-group row">
+			<label for="colFormLabelSm"
+				class="col-sm-2 col-form-label col-form-label-sm">Docente</label>
+			<div class="col-sm-10">
+				<input type="text" name="matricolaDocente" class="form-control form-control-sm"  placeholder="Matricola docente" required>
+				<input type="text" name="nome" class="form-control form-control-sm"  placeholder="Nome" required>
+				<input type="text" name="cognome" class="form-control form-control-sm"  placeholder="Cognome" required>
+			</div>
+				
+			
+			
+		</div>
+		
+		
+
+
+		<br>  
+		<div class="col-auto">
+      <button type="submit" class="btn btn-primary mb-2">Submit</button>
+       <button class="btn btn-danger" type="reset">Reset</button>
+    </div>
+	</form>
+	
+	
+	</div>
+	
+	
 	<div class="container" id="visualizza">
 	<h2>Elenco corsi</h2>
 	<button type="button" onclick="visualizzaCorsi()">Refresh</button>
@@ -217,10 +279,32 @@
 	
 	<div class="container" id="visualizzaCorsiDocente">
 	<h2>Elenco corsi per docente</h2>
-	<input id="nomeDocenteText" name="nomeDocenteText" type="text" value="" size="40" maxlength="200" />
-	<button type="button" onclick="visualizzaCorsi1(document.getElementById('nomeDocenteText').value)">Cerca</button>
 
-	<table class="table table-striped">
+
+	<div id="docentiRicerca">
+		<div class="form-row align-items-center">
+			<div class="col-auto my-1">
+				<label class="mr-sm-3" for="inlineFormCustomSelect">Docente</label>
+				<select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+
+				</select>
+
+			</div>
+
+			<div class="col-auto my-1">
+				<button type="button" class="btn btn-primary"
+					onclick="visualizzaCorsi1(document.getElementById('inlineFormCustomSelect').value)">Cerca</button>
+			</div>
+		</div>
+		</div>
+		
+		
+		
+		
+
+
+
+		<table class="table table-striped">
 		<thead>
 			<tr>
 				<th scope="col">#</th>
