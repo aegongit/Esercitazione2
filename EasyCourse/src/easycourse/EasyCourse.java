@@ -1,11 +1,7 @@
 package easycourse;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
@@ -69,18 +65,37 @@ public class EasyCourse {
 	*/
 	
 	
-	@GET
+	/*@GET
 	@Path("/corsi")
 	@Produces(MediaType.APPLICATION_JSON)
 	public HashMap<String,Corso> getCorsi(){
 		return this.listCorsi;
-	}
+	}*/
 	
 	@GET
 	@Path("/corsi/{id_corso}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Corso getCorsi(@PathParam("id_corso") String id_corso){
 		return this.listCorsi.get(id_corso);
+	}
+	
+	@GET 
+	@Path("/corsi")
+	@Produces(MediaType.APPLICATION_JSON)
+	public HashMap<String,Corso> getCorsiByDocente(@QueryParam("idDocente") String idDocente){
+		if (idDocente != null) {
+			Iterator<Corso> i = listCorsi.values().iterator();
+			HashMap<String, Corso> list = new HashMap<String, Corso>();
+			while (i.hasNext()) {
+				Corso c = i.next();
+				if (c.getDocente().getMatricola().equals(idDocente))
+					list.put(c.getCod(), c);
+
+			}
+			return list;
+		}
+		
+		return listCorsi;
 	}
 	
 	
