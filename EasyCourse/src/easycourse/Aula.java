@@ -26,7 +26,7 @@ public class Aula {
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome = Validation.validate(nome);
 	}
 	
 

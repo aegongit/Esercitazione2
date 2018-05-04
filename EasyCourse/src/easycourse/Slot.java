@@ -10,7 +10,7 @@ public class Slot {
 	private int oraFine;
 	
 	public Slot(String giorno,int oraInizio, int oraFine) {
-		this.giorno = giorno;
+		this.setGiorno(giorno); 
 		this.oraInizio = oraInizio;
 		this.oraFine = oraFine;
 	}
@@ -18,7 +18,7 @@ public class Slot {
 		return giorno;
 	}
 	public void setGiorno(String giorno) {
-		this.giorno = giorno;
+		this.giorno = Validation.validate(giorno);
 	}
 	public int getOraInizio() {
 		return oraInizio;

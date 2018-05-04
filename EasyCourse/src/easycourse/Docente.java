@@ -19,7 +19,7 @@ public class Docente {
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome = Validation.validate(nome);
 	}
 
 	public String getCognome() {
@@ -27,7 +27,7 @@ public class Docente {
 	}
 
 	public void setCognome(String cognome) {
-		this.cognome = cognome;
+		this.cognome = Validation.validate(cognome);
 	}
 
 	public String getMatricola() {
@@ -35,7 +35,7 @@ public class Docente {
 	}
 
 	public void setMatricola(String matricola) {
-		this.matricola = matricola;
+		this.matricola = Validation.validate(matricola);
 	}
 
 }

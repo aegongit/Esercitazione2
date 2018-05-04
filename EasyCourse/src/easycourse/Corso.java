@@ -20,8 +20,8 @@ public class Corso {
 	}
 	
 	public Corso(String cod, String nome,Docente d,int semestre, int anno) {
-		this.nome = nome;
-		this.cod = cod;
+		this.setNome(nome); 
+		this.setCod(cod);
 		this.mappaOrario = new HashMap<Slot,Aula>();
 		this.docente =d;
 		this.anno = anno;
@@ -33,13 +33,13 @@ public class Corso {
 		return nome;
 	}
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome = Validation.validate(nome);
 	}
 	public String getCod() {
 		return cod;
 	}
 	public void setCod(String cod) {
-		this.cod = cod;
+		this.cod = Validation.validate(cod);
 	}
 	public Docente getDocente() {
 		return docente;
