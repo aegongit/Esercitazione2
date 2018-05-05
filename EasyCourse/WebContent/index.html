@@ -101,7 +101,7 @@
 </script>
 
 <style type="text/css">
-#inserisci, #visualizzaCorsiDocente , #visualizza, #inserisciDocente {
+#inserisci, #visualizzaCorsiDocente , #visualizza, #inserisciDocente, #inserisciAula {
 	display: none;
 }
 
@@ -153,6 +153,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#" onclick="$('#inserisci').toggle();"  >Inserisci nuovo corso</a>
           <a class="dropdown-item" href="#" onclick="$('#inserisciDocente').toggle();"  >Inserisci nuovo docente</a>
+          <a class="dropdown-item" href="#" onclick="$('#inserisciAula').toggle();"  >Inserisci nuova Aula</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>
         </div>
@@ -224,19 +225,55 @@
 	</form>
 	
 	</div>
-	<div class="container" id="inserisciDocente" >
+	<div class="container" id="inserisciDocente">
+
+
+		<h1>Inserisci un nuovo docente</h1>
+
+		<form action="/EasyCourse/rest/unisa/docenti/h" method="post">
+			<div class="form-group row">
+				<label for="colFormLabelSm"
+					class="col-sm-2 col-form-label col-form-label-sm">Docente</label>
+				<div class="col-sm-10">
+					<input type="text" name="matricolaDocente"
+						class="form-control form-control-sm"
+						placeholder="Matricola docente" required> <input
+						type="text" name="nome" class="form-control form-control-sm"
+						placeholder="Nome" required> <input type="text"
+						name="cognome" class="form-control form-control-sm"
+						placeholder="Cognome" required>
+				</div>
+
+
+
+			</div>
+
+
+
+
+			<br>
+			<div class="col-auto">
+				<button type="submit" class="btn btn-primary mb-2">Submit</button>
+				<button class="btn btn-danger" type="reset">Reset</button>
+			</div>
+		</form>
+
+
+	</div>
+
+
+	<div class="container" id="inserisciAula" >
   
 
-	<h1>Inserisci un nuovo docente</h1>
+	<h1>Inserisci una nuova aula</h1>
 
-	<form action="/EasyCourse/rest/unisa/docenti/h" method="post" >
+	<form action="/EasyCourse/rest/unisa/aule/h" method="post" >
 		<div class="form-group row">
 			<label for="colFormLabelSm"
-				class="col-sm-2 col-form-label col-form-label-sm">Docente</label>
+				class="col-sm-2 col-form-label col-form-label-sm">Aula</label>
 			<div class="col-sm-10">
-				<input type="text" name="matricolaDocente" class="form-control form-control-sm"  placeholder="Matricola docente" required>
+				<input type="text" name="idAula" class="form-control form-control-sm"  placeholder="Matricola docente" required>
 				<input type="text" name="nome" class="form-control form-control-sm"  placeholder="Nome" required>
-				<input type="text" name="cognome" class="form-control form-control-sm"  placeholder="Cognome" required>
 			</div>
 				
 			
@@ -255,8 +292,7 @@
 	
 	
 	</div>
-	
-	
+
 	<div class="container" id="visualizza">
 	<h2>Elenco corsi</h2>
 	<button type="button" onclick="visualizzaCorsi()">Refresh</button>

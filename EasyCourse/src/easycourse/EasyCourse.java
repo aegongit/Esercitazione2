@@ -183,12 +183,12 @@ public class EasyCourse {
 	@POST
 	@Path("/docenti/{id_docente}")
 	public Response setDocente(@FormParam("matricolaDocente") String idDocente, @FormParam("nome") String nome,@FormParam("cognome") String cognome) {
-		String output = "Corso gia presente";
+		String output = "Docente gia presente";
 		if(!mapDocenti.containsKey(idDocente)){
 			Docente doc = new Docente(nome,cognome,idDocente);
 			mapDocenti.put(idDocente, doc);
 			
-			output = "Corso " + idDocente + " inserito";
+			output = "Docente " + idDocente + " inserito";
 		}
 		return Response.status(200).entity(output).build();
 	}
@@ -205,6 +205,21 @@ public class EasyCourse {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Aula getAula(@PathParam("id_aula") Integer id_aula){
 		return this.mapAule.get(id_aula);
+	}
+	
+	
+	@POST
+	@Path("/aule/{id_aule}")
+	public Response setAula(@FormParam("idAula") Integer idAula, @FormParam("nome") String nome) {
+		String output = "Aula gia presente";
+		if(!mapAule.containsKey(idAula)){
+			
+			Aula a = new Aula(idAula,nome);
+			mapAule.put(idAula, a);
+			
+			output = "Aula " + idAula + " inserito";
+		}
+		return Response.status(200).entity(output).build();
 	}
 	
 	/*
