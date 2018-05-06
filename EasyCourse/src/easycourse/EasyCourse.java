@@ -129,6 +129,19 @@ public class EasyCourse {
 			return null;
 		}
 		
+		if(queryParams.containsKey("giorno")){
+			
+			Iterator<Corso> i = mapCorsi.values().iterator();
+			HashMap<String, Corso> mapC = new HashMap<String, Corso>();
+			while(i.hasNext()) {
+				Corso c = i.next();
+				if(c.getMappaOrario().keySet().contains(queryParams.getFirst("giorno")))
+						mapC.put(c.getCod(),c);
+			}
+			return mapC;
+			
+		}
+		
 		return mapCorsi;
 	}
 	
