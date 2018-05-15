@@ -166,12 +166,13 @@ public class EasyCourse {
 	
 	@POST
 	@Path("/corsi/{id_corso}")
-	public Response test(@FormParam("cod") String idCorso, @FormParam("nome") String nome, @FormParam("matDocente") String matDocente,@FormParam("semestre") int semestre,@FormParam("anno") int anno) {
+	public Response test(@PathParam("id_corso") String idCorso, @FormParam("nome") String nome, @FormParam("matDocente") String matDocente,@FormParam("semestre") int semestre,@FormParam("anno") int anno) {
 		String output = "Corso gia presente";
 		if(!mapCorsi.containsKey(idCorso)){
 			Docente doc = this.mapDocenti.get(matDocente);
 			mapCorsi.put(idCorso,new Corso(idCorso,nome, doc,semestre,anno));
 			if(!mapDocenti.containsKey(matDocente)){
+				
 				mapDocenti.put(doc.getMatricola(), doc);
 			}
 			output = "Corso " + idCorso + " inserito";
@@ -195,7 +196,7 @@ public class EasyCourse {
 	
 	@POST
 	@Path("/docenti/{id_docente}")
-	public Response setDocente(@FormParam("matricolaDocente") String idDocente, @FormParam("nome") String nome,@FormParam("cognome") String cognome) {
+	public Response setDocente(@PathParam("id_docente") String idDocente, @FormParam("nome") String nome,@FormParam("cognome") String cognome) {
 		String output = "Docente gia presente";
 		if(!mapDocenti.containsKey(idDocente)){
 			Docente doc = new Docente(nome,cognome,idDocente);
@@ -222,8 +223,8 @@ public class EasyCourse {
 	
 	
 	@POST
-	@Path("/aule/{id_aule}")
-	public Response setAula(@FormParam("idAula") Integer idAula, @FormParam("nome") String nome) {
+	@Path("/aule/{id_aula}")
+	public Response setAula(@PathParam("id_aula") Integer idAula, @FormParam("nome") String nome) {
 		String output = "Aula gia presente";
 		if(!mapAule.containsKey(idAula)){
 			

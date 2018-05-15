@@ -11,95 +11,6 @@
 
 
 
-
-    <script>
-
-
-    
-	function toggler(divId) {
-		$("#" + divId).toggle();
-		
-	}
-
-
-	function visualizzaCorsi() {
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				var obj1 = JSON.parse(this.responseText);
-				
-				console.log(JSON.stringify(obj1));
-				
-				var msg = "<tr>";
-				var keys = Object.keys(obj1);
-				for (var i = 0; i<  keys.length; i++) {
-					var obj = obj1[keys[i]];
-					console.log("Cosro con id : "+keys[i]+" "+JSON.stringify(obj));
-					
-					
-						
-					msg = msg + "<th scope=\"row\">" + i + "</th><td>"+ obj.cod + "</td>"+"<td>" + obj.nome + "</td>"+"<td>" + obj.docente.nome +" "+ obj.docente.cognome + "</td>"+"</tr>";
-				}
-				document.getElementById("listCorsi").innerHTML = msg;
-			}
-		};
-		xhttp.open("GET", "http://localhost:8080/EasyCourse/rest/unisa/corsi", true);
-		xhttp.send();
-
-	}
-	
-	function visualizzaCorsi1(idDocente) {
-		console.log(idDocente);
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				var obj1 = JSON.parse(this.responseText);
-				console.log(JSON.stringify(obj1));
-				var msg = "<tr>";
-				var keys = Object.keys(obj1);
-				for (var i = 0; i<  keys.length; i++) {
-
-					var obj = obj1[keys[i]];
-					console.log("Cosro con id : "+keys[i]+" "+JSON.stringify(obj));
-
-
-					msg = msg + "<th scope=\"row\">" + i + "</th><td>"+ obj.cod + "</td>"+"<td>" + obj.nome + "</td>"+"<td>" + obj.docente.nome +" "+ obj.docente.cognome + "</td>"+"</tr>";
-				}
-				document.getElementById("listCorsi1").innerHTML = msg;
-			}
-		};
-		xhttp.open("GET", "http://localhost:8080/EasyCourse/rest/unisa/corsi?idDocente="+idDocente, true);
-		xhttp.send();
-
-	}
-	
-	function getDocenti(){
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				var obj1 = JSON.parse(this.responseText);
-				
-				console.log(JSON.stringify(obj1));
-				
-				var msg = "";
-				var keys = Object.keys(obj1);
-				for (var i = 0; i<  keys.length; i++) {
-					var obj = obj1[keys[i]];
-					console.log("Cosro con id : "+keys[i]+" "+JSON.stringify(obj));
-					
-					
-						
-					msg = msg + "<option value=\""+obj.matricola+"\">"+obj.nome+" "+obj.cognome+"</option>";
-				}
-				document.getElementById("inlineFormCustomSelect").innerHTML = msg;
-				document.getElementById("matDocente").innerHTML = msg;
-			}
-		};
-		xhttp.open("GET", "http://localhost:8080/EasyCourse/rest/unisa/docenti", true);
-		xhttp.send();
-	}
-</script>
-
 <style type="text/css">
 #inserisci, #visualizzaCorsiDocente , #visualizza, #inserisciDocente, #inserisciAula {
 	display: none;
@@ -173,12 +84,12 @@
 
 	<h1>Inserisci un nuovo corso</h1>
 
-	<form action="/EasyCourse/rest/unisa/corsi/test" method="post" >
+	<form name="inserisciCorso" >
 		<div class="form-group row">
 			<label for="colFormLabelSm"
 				class="col-sm-2 col-form-label col-form-label-sm">Corso</label>
 			<div class="col-sm-10">
-				<input type="text" name="cod" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Codice corso" required>
+				
 				<input type="text" name="nome" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Nome corso" required>
 				<div>
 				<div class="form-check form-check-inline">
@@ -230,7 +141,7 @@
 
 		<h1>Inserisci un nuovo docente</h1>
 
-		<form action="/EasyCourse/rest/unisa/docenti/h" method="post">
+		<form name="inserisciDocente">
 			<div class="form-group row">
 				<label for="colFormLabelSm"
 					class="col-sm-2 col-form-label col-form-label-sm">Docente</label>
@@ -243,13 +154,7 @@
 						name="cognome" class="form-control form-control-sm"
 						placeholder="Cognome" required>
 				</div>
-
-
-
 			</div>
-
-
-
 
 			<br>
 			<div class="col-auto">
@@ -267,12 +172,11 @@
 
 	<h1>Inserisci una nuova aula</h1>
 
-	<form action="/EasyCourse/rest/unisa/aule/h" method="post" >
+	<form name="inserisciAula"  >
 		<div class="form-group row">
 			<label for="colFormLabelSm"
 				class="col-sm-2 col-form-label col-form-label-sm">Aula</label>
 			<div class="col-sm-10">
-				<input type="text" name="idAula" class="form-control form-control-sm"  placeholder="Matricola docente" required>
 				<input type="text" name="nome" class="form-control form-control-sm"  placeholder="Nome" required>
 			</div>
 				
@@ -357,8 +261,8 @@
 	</div>
   
   
-  
-  
+  <script type="text/javascript" src="script.js"></script>
+ 
   
   </body>
 </html>

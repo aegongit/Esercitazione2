@@ -23,7 +23,7 @@ Rirorse:
 /corsi/{id_corso}/ ok
 /corsi?da= &a=
 /corsi?giorno
-/corsi/{id_docente}/ (restituisce tutti i corsi del docente)
+/corsi/{id_docente}/ (restituisce tutti i corsi del docente) ok
 /corsi/{id_aula} (tutti i corsi nell'aula)
 /corsi?anno=1 o 2
 /corsi?semestre=1 o 2

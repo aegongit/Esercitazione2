@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Slot {
 	private String giorno;
 	private int oraInizio;
-	private int oraFine;
+	private int oraFine; //mettere qui l'aula
 	
 	public Slot(String giorno,int oraInizio, int oraFine) {
 		this.setGiorno(giorno); 
