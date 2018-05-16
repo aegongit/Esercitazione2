@@ -1,5 +1,6 @@
 package easycourse;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -16,6 +17,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
 
 
@@ -224,6 +226,7 @@ public class EasyCourse {
 			
 			output = "Docente " + idDocente + " inserito";
 		}
+		
 		return Response.status(200).entity(output).build();
 	}
 	
@@ -253,6 +256,7 @@ public class EasyCourse {
 			
 			output = "Aula " + idAula + " inserito";
 		}
+		
 		return Response.status(200).entity(output).build();
 	}
 	
