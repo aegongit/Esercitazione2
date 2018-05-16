@@ -180,7 +180,7 @@ function visualizzaCorsi1(idDocente) {
 				tmp = "";
 				msg = msg + "<th scope=\"row\">" + i + "</th><td>"+ obj.cod + "</td>"+"<td>" + obj.nome + "</td>"+"<td>" + obj.docente.nome +" "+ obj.docente.cognome + "</td>";
 				for (var j = 0; j<keysSlot.length; j++){
-					var msg1 = "Dalle ore: "+obj.mappaOrario[keysSlot[j]].oraInizio+" alle ore "+obj.mappaOrario[keysSlot[j]].oraFine+" in aula "+obj.mappaOrario[keysSlot[j]].aula.nome;;
+					var msg1 = "Dalle ore: "+obj.mappaOrario[keysSlot[j]].oraInizio+" alle ore "+obj.mappaOrario[keysSlot[j]].oraFine+" in aula "+obj.mappaOrario[keysSlot[j]].aula.nome;
 					tmp = tmp +"<button onclick=\"alert('"+msg1+"');\" id=\""+keysSlot[j]+"\"  type=\"button\" class=\"btn btn-prymary\">"+obj.mappaOrario[keysSlot[j]].giorno+"</button>  "
 					
 				}

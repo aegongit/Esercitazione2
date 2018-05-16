@@ -170,7 +170,7 @@ public class EasyCourse {
 	
 	@POST
 	@Path("/corsi/{id_corso}")
-	public Response test(@PathParam("id_corso") String idCorso, @FormParam("nome") String nome, @FormParam("matDocente") String matDocente,@FormParam("semestre") int semestre,@FormParam("anno") int anno,@FormParam("idAula") String idAula,@FormParam("giorno") String giorno,@FormParam("oraInizio") Integer oraInizio,@FormParam("oraFine") Integer oraFine) {
+	public Response test(@PathParam("id_corso") String idCorso, @FormParam("nome") String nome, @FormParam("matDocente") String matDocente,@FormParam("semestre") int semestre,@FormParam("anno") int anno,@FormParam("idAula") Integer idAula,@FormParam("giorno") String giorno,@FormParam("oraInizio") Integer oraInizio,@FormParam("oraFine") Integer oraFine) {
 		String output = "Corso gia presente";
 		if(!mapCorsi.containsKey(idCorso)){
 			Docente doc = this.mapDocenti.get(matDocente);

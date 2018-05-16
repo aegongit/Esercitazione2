@@ -27,7 +27,7 @@ public class Corso {
 		this.anno = anno;
 		this.semestre = semestre;
 		
-		this.mappaOrario.put(s.getId(), s);
+		this.mappaOrario.put(s.getGiorno(), s);
 	}
 	
 	
