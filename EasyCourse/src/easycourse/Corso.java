@@ -19,13 +19,15 @@ public class Corso {
 		this.mappaOrario = new HashMap<String,Slot>();
 	}
 	
-	public Corso(String cod, String nome,Docente d,int semestre, int anno) {
+	public Corso(String cod, String nome,Docente d,int semestre, int anno, Slot s) {
 		this.setNome(nome); 
 		this.setCod(cod);
 		this.mappaOrario = new HashMap<String,Slot>();
 		this.docente =d;
 		this.anno = anno;
 		this.semestre = semestre;
+		
+		this.mappaOrario.put(s.getId(), s);
 	}
 	
 	

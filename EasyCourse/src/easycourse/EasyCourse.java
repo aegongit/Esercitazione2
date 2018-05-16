@@ -7,6 +7,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -35,7 +36,8 @@ public class EasyCourse {
 			mapDocenti = new HashMap<String,Docente>();
 			mapAule = new HashMap<Integer,Aula>();
 			
-			Corso c = new Corso("1", "Ingegneria del software", new Docente("Pasquale", "Foggia", "1"), 1, 1);
+			Aula a0 = new Aula(0, "T25");
+			Corso c = new Corso("1", "Ingegneria del software", new Docente("Pasquale", "Foggia", "1"), 1, 1,new Slot("Luned'", 7, 10,a0));
 			HashMap<String, Slot> h = new HashMap<String, Slot>();
 			Aula a = new Aula(1, "M");
 			h.put("slot1",new Slot("Giovedì", 9, 13,a));
@@ -168,17 +170,33 @@ public class EasyCourse {
 	
 	@POST
 	@Path("/corsi/{id_corso}")
-	public Response test(@PathParam("id_corso") String idCorso, @FormParam("nome") String nome, @FormParam("matDocente") String matDocente,@FormParam("semestre") int semestre,@FormParam("anno") int anno) {
+	public Response test(@PathParam("id_corso") String idCorso, @FormParam("nome") String nome, @FormParam("matDocente") String matDocente,@FormParam("semestre") int semestre,@FormParam("anno") int anno,@FormParam("idAula") String idAula,@FormParam("giorno") String giorno,@FormParam("oraInizio") Integer oraInizio,@FormParam("oraFine") Integer oraFine) {
 		String output = "Corso gia presente";
 		if(!mapCorsi.containsKey(idCorso)){
 			Docente doc = this.mapDocenti.get(matDocente);
-			mapCorsi.put(idCorso,new Corso(idCorso,nome, doc,semestre,anno));
+			Aula a = this.mapAule.get(idAula);
+			Slot s = new Slot(giorno,oraInizio,oraFine,a);
+			mapCorsi.put(idCorso,new Corso(idCorso,nome, doc,semestre,anno,s));
 			if(!mapDocenti.containsKey(matDocente)){
 				
 				mapDocenti.put(doc.getMatricola(), doc);
 			}
 			output = "Corso " + idCorso + " inserito";
 		}
+		return Response.status(200).entity(output).build();
+	}
+	
+	@PUT
+	@Path("/corsi/{id_corso}")
+	public Response updateCorso(@PathParam("id_corso") String idCorso,@FormParam("idAula") String idAula,@FormParam("giorno") String giorno,@FormParam("oraInizio") Integer oraInizio,@FormParam("oraFine") Integer oraFine) {
+	
+		
+		Aula a = this.mapAule.get(idAula);
+		Slot s = new Slot(giorno,oraInizio,oraFine,a);
+		Corso c = this.getCorso(idCorso);
+		c.getMappaOrario().put(s.getGiorno(), s);
+		String output = "Corso " + idCorso + " aggiornato";
+		
 		return Response.status(200).entity(output).build();
 	}
 	

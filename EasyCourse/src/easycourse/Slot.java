@@ -5,9 +5,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 //JAX-RS supports an automatic mapping from JAXB annotated class to XML and JSON
 public class Slot {
+	private String id;
 	private String giorno;
 	private int oraInizio;
-	private int oraFine; //mettere qui l'aula
+	private int oraFine; 
 	private Aula aula;
 	
 	public Slot(String giorno,int oraInizio, int oraFine, Aula a) {
@@ -15,6 +16,7 @@ public class Slot {
 		this.oraInizio = oraInizio;
 		this.oraFine = oraFine;
 		this.setAula(a);
+		this.id="slot"+(int)(Math.random()*100000);
 	}
 	
 	
@@ -57,4 +59,12 @@ public class Slot {
 	public void setAula(Aula aula) {
 		this.aula = aula;
 	}
+
+
+	public String getId() {
+		return id;
+	}
+
+
+	
 }
