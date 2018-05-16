@@ -258,7 +258,7 @@ function getAule(){
 				console.log("Aula con id : "+keys[i]+" "+JSON.stringify(obj));
 				msg = msg + "<option value=\""+obj.idAula+"\">"+obj.nome+"</option>";
 			}
-			document.getElementById("inlineFormCustomSelect").innerHTML = msg;
+			//document.getElementById("inlineFormCustomSelect").innerHTML = msg;
 			document.getElementById("idAula").innerHTML = msg;
 			document.getElementById("idAulaUpdate").innerHTML = msg;
 		}
