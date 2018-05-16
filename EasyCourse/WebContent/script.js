@@ -14,7 +14,7 @@ formOrario.addEventListener("submit", function(e) {
 	var oraInizio = formOrario.oraInizioUpdate.value;
 	var oraFine = formOrario.oraFineUpdate.value;
 	
-	if(((oraInizio*1) < 7 || (oraInizio*1)> 19) || (oraFine*1) < 7 || (oraFine*1) > 19 ){
+	if((oraInizio*1) < 7 || (oraInizio*1)> 19 || (oraFine*1) < 7 || (oraFine*1) > 19 ){
 		alert("Intervallo orario non valido!");
 		return;
 	}

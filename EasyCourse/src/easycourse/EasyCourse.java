@@ -188,7 +188,7 @@ public class EasyCourse {
 	
 	@PUT
 	@Path("/corsi/{id_corso}")
-	public Response updateCorso(@PathParam("id_corso") String idCorso,@FormParam("idAula") String idAula,@FormParam("giorno") String giorno,@FormParam("oraInizio") Integer oraInizio,@FormParam("oraFine") Integer oraFine) {
+	public Response updateCorso(@PathParam("id_corso") String idCorso,@FormParam("idAula") Integer idAula,@FormParam("giorno") String giorno,@FormParam("oraInizio") Integer oraInizio,@FormParam("oraFine") Integer oraFine) {
 	
 		
 		Aula a = this.mapAule.get(idAula);
