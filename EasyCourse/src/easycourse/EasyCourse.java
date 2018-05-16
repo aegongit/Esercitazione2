@@ -36,9 +36,11 @@ public class EasyCourse {
 			mapAule = new HashMap<Integer,Aula>();
 			
 			Corso c = new Corso("1", "Ingegneria del software", new Docente("Pasquale", "Foggia", "1"), 1, 1);
-			HashMap<Slot, Aula> h = new HashMap<Slot, Aula>();
+			HashMap<String, Slot> h = new HashMap<String, Slot>();
 			Aula a = new Aula(1, "M");
-			h.put(new Slot("Giovedì", 9, 13), a);
+			h.put("slot1",new Slot("Giovedì", 9, 13,a));
+			Aula a1 = new Aula(2, "C");
+			h.put("slot2",new Slot("Martedì", 9, 13,a1));
 			
 			c.setMappaOrario(h);
 			mapCorsi.put(c.getCod(), c);

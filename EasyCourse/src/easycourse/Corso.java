@@ -10,19 +10,19 @@ public class Corso {
 	private String nome;
 	private String cod;
 	private Docente docente;
-	private HashMap<Slot,Aula> mappaOrario;
+	private HashMap<String,Slot> mappaOrario;
 	private int semestre, anno;
 	
 	public Corso(String cod, String nome) {
 		this.nome = nome;
 		this.cod = cod;
-		this.mappaOrario = new HashMap<Slot,Aula>();
+		this.mappaOrario = new HashMap<String,Slot>();
 	}
 	
 	public Corso(String cod, String nome,Docente d,int semestre, int anno) {
 		this.setNome(nome); 
 		this.setCod(cod);
-		this.mappaOrario = new HashMap<Slot,Aula>();
+		this.mappaOrario = new HashMap<String,Slot>();
 		this.docente =d;
 		this.anno = anno;
 		this.semestre = semestre;
@@ -47,10 +47,10 @@ public class Corso {
 	public void setDocente(Docente docente) {
 		this.docente = docente;
 	}
-	public HashMap<Slot,Aula> getMappaOrario() {
+	public HashMap<String,Slot> getMappaOrario() {
 		return mappaOrario;
 	}
-	public void setMappaOrario(HashMap<Slot,Aula> mappaOrario) {
+	public void setMappaOrario(HashMap<String,Slot> mappaOrario) {
 		this.mappaOrario = mappaOrario;
 	}
 	public int getSemestre() {

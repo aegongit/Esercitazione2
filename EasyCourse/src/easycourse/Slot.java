@@ -8,12 +8,16 @@ public class Slot {
 	private String giorno;
 	private int oraInizio;
 	private int oraFine; //mettere qui l'aula
+	private Aula aula;
 	
-	public Slot(String giorno,int oraInizio, int oraFine) {
+	public Slot(String giorno,int oraInizio, int oraFine, Aula a) {
 		this.setGiorno(giorno); 
 		this.oraInizio = oraInizio;
 		this.oraFine = oraFine;
+		this.setAula(a);
 	}
+	
+	
 	public String getGiorno() {
 		return giorno;
 	}
@@ -42,5 +46,15 @@ public class Slot {
 	
 	public static boolean isSmaller(int a, int b) {
 		return !Slot.isGreater(a, b);
+	}
+
+
+	public Aula getAula() {
+		return aula;
+	}
+
+
+	public void setAula(Aula aula) {
+		this.aula = aula;
 	}
 }
