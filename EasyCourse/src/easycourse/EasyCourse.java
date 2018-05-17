@@ -1,10 +1,8 @@
 package easycourse;
 
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -12,12 +10,10 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
 
 
@@ -38,18 +34,23 @@ public class EasyCourse {
 			mapDocenti = new HashMap<String,Docente>();
 			mapAule = new HashMap<Integer,Aula>();
 			
-			Aula a0 = new Aula(0, "T25");
-			Corso c = new Corso("1", "Ingegneria del software", new Docente("Pasquale", "Foggia", "1"), 1, 1,new Slot("Luned'", 7, 10,a0));
+			Aula a0 = new Aula(0, "M");
+			Corso c = new Corso("1", "Ingegneria del software", new Docente("Pasquale", "Foggia", "1"), 1, 1,new Slot("Lunedì", 7, 10,a0));
 			HashMap<String, Slot> h = new HashMap<String, Slot>();
-			Aula a = new Aula(1, "M");
-			h.put("slot1",new Slot("Giovedì", 9, 13,a));
-			Aula a1 = new Aula(2, "C");
-			h.put("slot2",new Slot("Martedì", 9, 13,a1));
+			Aula a1 = new Aula(1, "137");
+			Corso c1 = new Corso("2", "Mobile Programming", new Docente("Alessia", "Saggese", "2"), 2, 2,new Slot("Martedì", 10, 12,a1));
+			Aula a2 = new Aula(3, "C");
+			h.put("slot1",new Slot("Giovedì", 9, 13,a2));
+			Aula a3 = new Aula(4, "H");
+			h.put("slot2",new Slot("Martedì", 11, 12,a3));
 			
 			c.setMappaOrario(h);
 			mapCorsi.put(c.getCod(), c);
+			mapCorsi.put(c1.getCod(), c1);
 			mapDocenti.put(c.getDocente().getMatricola(), c.getDocente());
-			mapAule.put(a.getIdAula(), a);
+			mapDocenti.put(c1.getDocente().getMatricola(), c1.getDocente());
+			mapAule.put(a2.getIdAula(), a2);
+			mapAule.put(a3.getIdAula(), a3);
 		}
 	}
 	
