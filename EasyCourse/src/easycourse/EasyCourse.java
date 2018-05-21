@@ -35,14 +35,14 @@ public class EasyCourse {
 			mapAule = new HashMap<Integer,Aula>();
 			
 			Aula a0 = new Aula(0, "M");
-			Corso c = new Corso("1", "Ingegneria del software", new Docente("Pasquale", "Foggia", "1"), 1, 1,new Slot("Lunedì", 7, 10,a0));
+			Corso c = new Corso("1", "Ingegneria del software", new Docente("Pasquale", "Foggia", "1"), 1, 1,new Slot("Lunedi", 7, 10,a0));
 			HashMap<String, Slot> h = new HashMap<String, Slot>();
 			Aula a1 = new Aula(1, "137");
-			Corso c1 = new Corso("2", "Mobile Programming", new Docente("Alessia", "Saggese", "2"), 2, 2,new Slot("Martedì", 10, 12,a1));
+			Corso c1 = new Corso("2", "Mobile Programming", new Docente("Alessia", "Saggese", "2"), 2, 2,new Slot("Martedi", 10, 12,a1));
 			Aula a2 = new Aula(3, "C");
-			h.put("slot1",new Slot("Giovedì", 9, 13,a2));
+			h.put("slot1",new Slot("Giovedi", 9, 13,a2));
 			Aula a3 = new Aula(4, "H");
-			h.put("slot2",new Slot("Martedì", 11, 12,a3));
+			h.put("slot2",new Slot("Martedi", 11, 12,a3));
 			
 			c.setMappaOrario(h);
 			mapCorsi.put(c.getCod(), c);
@@ -67,6 +67,8 @@ public class EasyCourse {
 	@Produces(MediaType.APPLICATION_JSON)
 	public HashMap<String,Corso> getCorsi(@Context UriInfo ui){
 		MultivaluedMap<String, String> queryParams = ui.getQueryParameters();
+		System.out.println("ok");
+		System.out.println(queryParams.containsKey("giorno"));
 		if(queryParams.containsKey("idDocente") && queryParams.containsKey("anno") && queryParams.containsKey("semestre")){
 			Iterator<Corso> i = mapCorsi.values().iterator();
 			HashMap<String, Corso> mapC = new HashMap<String, Corso>();
@@ -107,18 +109,20 @@ public class EasyCourse {
 			}
 			return mapC;
 		}
-		else if (!queryParams.isEmpty()){
-			return null;
-		}
 		
 		if(queryParams.containsKey("giorno")){
-			System.out.println("Test");
 			Iterator<Corso> i = mapCorsi.values().iterator();
 			HashMap<String, Corso> mapC = new HashMap<String, Corso>();
 			while(i.hasNext()) {
 				Corso c = i.next();
-				if(c.getMappaOrario().keySet().contains(queryParams.getFirst("giorno")))
+				Iterator<Slot> i2 = c.getMappaOrario().values().iterator();
+				while(i2.hasNext()) {
+					Slot s = i2.next();
+					if(s.getGiorno().equals(queryParams.getFirst("giorno"))){
 						mapC.put(c.getCod(),c);
+					}
+				}
+
 			}
 			return mapC;
 			
@@ -133,7 +137,7 @@ public class EasyCourse {
 				Iterator<Slot> i2 = c.getMappaOrario().values().iterator();
 				while(i2.hasNext()) {
 					Slot s = i2.next();
-					if(s.getOraInizio() >= Integer.parseInt(queryParams.getFirst("da")) && s.getOraInizio() <= Integer.parseInt(queryParams.getFirst("a"))){
+					if(s.getOraInizio() >= Integer.parseInt(queryParams.getFirst("da")) && s.getOraFine() <= Integer.parseInt(queryParams.getFirst("a"))){
 						mapC.put(c.getCod(),c);
 					}
 				}
