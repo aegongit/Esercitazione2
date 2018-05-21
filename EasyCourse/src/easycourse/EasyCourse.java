@@ -112,7 +112,7 @@ public class EasyCourse {
 		}
 		
 		if(queryParams.containsKey("giorno")){
-			
+			System.out.println("Test");
 			Iterator<Corso> i = mapCorsi.values().iterator();
 			HashMap<String, Corso> mapC = new HashMap<String, Corso>();
 			while(i.hasNext()) {
@@ -122,6 +122,25 @@ public class EasyCourse {
 			}
 			return mapC;
 			
+		}
+		
+		if(queryParams.containsKey("da") && queryParams.containsKey("a")){
+
+			Iterator<Corso> i = mapCorsi.values().iterator();
+			HashMap<String, Corso> mapC = new HashMap<String, Corso>();
+			while(i.hasNext()) {
+				Corso c = i.next();
+				Iterator<Slot> i2 = c.getMappaOrario().values().iterator();
+				while(i2.hasNext()) {
+					Slot s = i2.next();
+					if(s.getOraInizio() >= Integer.parseInt(queryParams.getFirst("da")) && s.getOraInizio() <= Integer.parseInt(queryParams.getFirst("a"))){
+						mapC.put(c.getCod(),c);
+					}
+				}
+
+			}
+			return mapC;
+
 		}
 		
 		return mapCorsi;
@@ -193,7 +212,28 @@ public class EasyCourse {
 	@GET
 	@Path("/aule")
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<Integer,Aula> getAule(){
+	public HashMap<Integer,Aula> getAule(@Context UriInfo ui){
+		
+		MultivaluedMap<String, String> queryParams = ui.getQueryParameters();
+
+		if(queryParams.containsKey("da") && queryParams.containsKey("a")){
+
+			Iterator<Corso> i = mapCorsi.values().iterator();
+			HashMap<Integer, Aula> mapA = new HashMap<Integer, Aula>();
+			while(i.hasNext()) {
+				Corso c = i.next();
+				Iterator<Slot> i2 = c.getMappaOrario().values().iterator();
+				while(i2.hasNext()) {
+					Slot s = i2.next();
+					if(s.getOraInizio() >= Integer.parseInt(queryParams.getFirst("da")) && s.getOraInizio() <= Integer.parseInt(queryParams.getFirst("a"))){
+						mapA.put(s.getAula().getIdAula(),s.getAula());
+					}
+				}
+
+			}
+			return mapA;
+
+		}
 		return this.mapAule;
 	}
 	
